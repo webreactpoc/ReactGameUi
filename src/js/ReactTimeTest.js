@@ -7,7 +7,7 @@
 function loadBeginState(){
     // Initialyse and create startGameButton and 
     var startGameButton = document.createElement("startGameButton");
-    startGameButton.
+    
     startGameButton.innerHTML = "Begin";
     document.getElementsByTagName("body")[0].appendChild(startGameButton);
     startGameButton.addEventListener("click", startGameButtonFunction);
