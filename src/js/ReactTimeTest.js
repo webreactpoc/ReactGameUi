@@ -1,3 +1,9 @@
+function printMousePos(event) {
+    document.body.textContent =
+        "( X: " + event.clientX +
+        ", Y: " + event.clientY + " )";
+  }
+
 window.onload = function(){
-    document.getElementById("pageTitle").innerHTML = "titre2";
+    document.addEventListener("click", printMousePos);
 }
