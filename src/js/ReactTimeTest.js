@@ -7,6 +7,7 @@
 //CONSTANTS 
 
 TIMER_COUNT = 3;
+gameOnGoing = false;//game state
 
 function loadBeginState(){
     // Initialyse and create startGameButton and 
@@ -30,7 +31,6 @@ function endCountdown(timer) {
     // logic to finish the countdown here
     clearInterval(timer);
     startGame();
-
   }
   
 function startTimer(timer) {
@@ -49,6 +49,8 @@ function startGameCountDown(testName){
 }
 
 function startGame() {
+    gameOnGoing = true; //TODO concurrency problem, need a singleton to simulate game state
+
     var w_key = document.createElement("div");
     w_key.setAttribute('class', 'key');
     w_key.innerHTML = "W";
@@ -68,5 +70,17 @@ function startGame() {
 }
 
 window.onload = function(){
+    document.addEventListener("keydown", keyDownDetection);
     loadBeginState();
+}
+
+
+function keyDownDetection(key){
+    //fonctions a executer lorsqu'une touche est presse
+    console.log(key.keycode);
+    if(gameOnGoing){
+        if(key.keyCode=='65'||key.keyCode=='87'||key.keyCode=='83'||key.keyCode=='68'){// si une autre touche que awsd est presse, rien n'arrive 
+            document.getElementById("pageTitle").innerText = key.keyCode;
+        }
+    }
 }
