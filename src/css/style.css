@@ -1,17 +1,22 @@
-.body{
-  color: #000;
+.virtualbox{
+  width:650px; height: 450px;
+  background-color: #fff;
+  margin: 0px auto;
+  border-radius: 9px;
+  padding: 30px;
 }
 .key{
-    width: 40px; height:40px;
+    width: 200px; height:200px;
     display:block;
     background-color:#fff;
-    text-align: left;
+    text-align: center;
     padding-left: 8px;
     line-height: 29px;
-    border-radius:2px;
-    float:left; margin-left: 2px;
-    margin-bottom:2px;
+    border-radius:5px;
+    float:left; margin-left: 5px;
+    margin-bottom:5px;
     transition: box-shadow 0.7s ease;
+    font-size: 50px;
   }
 
 .key:hover{box-shadow:0px 0px 10px rgb(15, 239, 255); z-index:1000;}

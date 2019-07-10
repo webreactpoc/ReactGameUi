@@ -6,7 +6,7 @@
 
 //CONSTANTS 
 
-TIMER_COUNT = 3;
+TIMER_COUNT = 0;
 gameOnGoing = false;//game state
 
 function loadBeginState(){
@@ -50,7 +50,36 @@ function startGameCountDown(testName){
 
 function startGame() {
     gameOnGoing = true; //TODO concurrency problem, need a singleton to simulate game state
+    var virtual_box = document.createElement("div");
+    virtual_box.setAttribute('class', 'virtualbox');
+    var the_body = document.getElementsByTagName("body")[0];
 
+    var filler_1 = document.createElement("div");
+    filler_1.setAttribute('class', 'key');
+    var w_key = document.createElement("div");
+    w_key.setAttribute('class', 'key');
+    w_key.innerHTML = "W";
+    var filler_2 = document.createElement("div");
+    filler_2.setAttribute('class', 'key');
+    var a_key = document.createElement("div");
+    a_key.setAttribute('class', 'key');
+    a_key.innerHTML = "A";
+    var s_key = document.createElement("div");
+    s_key.setAttribute('class', 'key');
+    s_key.innerHTML = "S";
+    var d_key = document.createElement("div");
+    d_key.setAttribute('class', 'key');
+    d_key.innerHTML = "D";
+    virtual_box.appendChild(filler_1);
+    virtual_box.appendChild(w_key);
+    virtual_box.appendChild(filler_2);
+    virtual_box.appendChild(a_key);
+    virtual_box.appendChild(s_key);
+    virtual_box.appendChild(d_key);
+
+    the_body.appendChild(virtual_box);
+
+    /*
     var w_key = document.createElement("div");
     w_key.setAttribute('class', 'key');
     w_key.innerHTML = "W";
@@ -67,6 +96,7 @@ function startGame() {
     d_key.setAttribute('class', 'key');
     d_key.innerHTML = "D";
     document.getElementsByTagName("body")[0].appendChild(d_key);
+    */
 }
 
 window.onload = function(){
