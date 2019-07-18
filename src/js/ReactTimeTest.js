@@ -10,6 +10,10 @@ TIMER_COUNT = 0;
 gameOnGoing = false;//game state
 globalStartTimer = Date.now(); // NOT SURE IF THIS IS CORRECT...        keeps track of start highlight time
 globalCorrectKey = 0; // NOT SURE IF THIS IS CORRECT...                 keeps track of highlighted key
+results = []; // NOT SURE IF THIS IS CORRECT...
+keycodes = [87, 65, 83, 68];
+keys = [];
+selection = 0;
 
 function loadBeginState(){
     // Initialyse and create startGameButton and 
@@ -57,6 +61,15 @@ function keyfactory(letter) {
     return key;
 }
 
+// We shouldn't do this, but using it for now
+function highlight() {
+    var rnjesus = Math.floor(Math.random() * 4);
+    globalCorrectKey = keycodes[rnjesus];
+    selection = keys[rnjesus];
+    globalStartTimer = Date.now();
+    selection.style.boxShadow = "0px 0px 10px rgb(15, 239, 255)";
+ }
+
 function startGame() {
     gameOnGoing = true; //TODO concurrency problem, need a singleton to simulate game state
     var virtual_box = document.createElement("div");
@@ -64,11 +77,9 @@ function startGame() {
     var the_body = document.getElementsByTagName("body")[0];
 
     var letters = ["W", "A", "S", "D"];
-    var keycodes = [87, 65, 83, 68];
 
     var filler_1 = keyfactory("");
     var filler_2 = keyfactory("");
-    var keys = [];
     for (i = 0; i < letters.length; i++) {
         keys.push(keyfactory(letters[i]));
     }
@@ -86,13 +97,7 @@ function startGame() {
     // Start a timer and measure reaction time
     // Select key to highlight
 
-    var rnjesus = Math.floor(Math.random() * 4);
-    globalCorrectKey = keycodes[rnjesus];
-    console.log(globalCorrectKey);
-    var selection = keys[rnjesus];
-    globalStartTimer = Date.now();
-    selection.style.boxShadow = "0px 0px 10px rgb(15, 239, 255)";
-
+    highlight();
     // Shit lights up
 }
 
@@ -108,8 +113,17 @@ function keyDownDetection(key){
     if(gameOnGoing){
         if(key.keyCode== globalCorrectKey){// si une autre touche que awsd est presse, rien n'arrive 
             //document.getElementById("pageTitle").innerText = key.keyCode;
+            // GOTTA CLEAN A LOT OF STUFF UP
             var delta = Date.now() - globalStartTimer;
-            document.getElementById("pageTitle").innerText = delta/1000 + "seconds";
+            results.push(delta/1000);
+            var sum = 0;
+            for( var i = 0; i < results.length; i++ ){
+                sum += results[i];
+            }
+            var avg = sum/results.length;
+            document.getElementById("pageTitle").innerText = avg + "seconds";
+            selection.style.boxShadow = "";
+            highlight();
         }
     }
 }

@@ -18,5 +18,3 @@
     transition: box-shadow 0.7s ease;
     font-size: 50px;                                  /* size of text written on key */
   }
-
-.key:hover{box-shadow:0px 0px 10px rgb(15, 239, 255); z-index:1000;}
