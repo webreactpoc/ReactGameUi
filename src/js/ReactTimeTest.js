@@ -8,6 +8,8 @@
 
 TIMER_COUNT = 0;
 gameOnGoing = false;//game state
+globalStartTimer = Date.now(); // NOT SURE IF THIS IS CORRECT...        keeps track of start highlight time
+globalCorrectKey = 0; // NOT SURE IF THIS IS CORRECT...                 keeps track of highlighted key
 
 function loadBeginState(){
     // Initialyse and create startGameButton and 
@@ -48,55 +50,50 @@ function startGameCountDown(testName){
     var timer = setInterval(function() { startTimer(timer); }, 1000); //TODO find a better way to stop timer
 }
 
+function keyfactory(letter) {
+    var key = document.createElement("div");
+    key.setAttribute('class', 'key');
+    key.innerHTML = letter;
+    return key;
+}
+
 function startGame() {
     gameOnGoing = true; //TODO concurrency problem, need a singleton to simulate game state
     var virtual_box = document.createElement("div");
     virtual_box.setAttribute('class', 'virtualbox');
     var the_body = document.getElementsByTagName("body")[0];
 
-    var filler_1 = document.createElement("div");
-    filler_1.setAttribute('class', 'key');
-    var w_key = document.createElement("div");
-    w_key.setAttribute('class', 'key');
-    w_key.innerHTML = "W";
-    var filler_2 = document.createElement("div");
-    filler_2.setAttribute('class', 'key');
-    var a_key = document.createElement("div");
-    a_key.setAttribute('class', 'key');
-    a_key.innerHTML = "A";
-    var s_key = document.createElement("div");
-    s_key.setAttribute('class', 'key');
-    s_key.innerHTML = "S";
-    var d_key = document.createElement("div");
-    d_key.setAttribute('class', 'key');
-    d_key.innerHTML = "D";
+    var letters = ["W", "A", "S", "D"];
+    var keycodes = [87, 65, 83, 68];
+
+    var filler_1 = keyfactory("");
+    var filler_2 = keyfactory("");
+    var keys = [];
+    for (i = 0; i < letters.length; i++) {
+        keys.push(keyfactory(letters[i]));
+    }
+
+    // TODO insert next part in a loop
     virtual_box.appendChild(filler_1);
-    virtual_box.appendChild(w_key);
+    virtual_box.appendChild(keys[0]);
     virtual_box.appendChild(filler_2);
-    virtual_box.appendChild(a_key);
-    virtual_box.appendChild(s_key);
-    virtual_box.appendChild(d_key);
+    virtual_box.appendChild(keys[1]);
+    virtual_box.appendChild(keys[2]);
+    virtual_box.appendChild(keys[3]);
 
     the_body.appendChild(virtual_box);
 
-    /*
-    var w_key = document.createElement("div");
-    w_key.setAttribute('class', 'key');
-    w_key.innerHTML = "W";
-    document.getElementsByTagName("body")[0].appendChild(w_key);
-    var a_key = document.createElement("div");
-    a_key.setAttribute('class', 'key');
-    a_key.innerHTML = "A";
-    document.getElementsByTagName("body")[0].appendChild(a_key);
-    var s_key = document.createElement("div");
-    s_key.setAttribute('class', 'key');
-    s_key.innerHTML = "S";
-    document.getElementsByTagName("body")[0].appendChild(s_key);
-    var d_key = document.createElement("div");
-    d_key.setAttribute('class', 'key');
-    d_key.innerHTML = "D";
-    document.getElementsByTagName("body")[0].appendChild(d_key);
-    */
+    // Start a timer and measure reaction time
+    // Select key to highlight
+
+    var rnjesus = Math.floor(Math.random() * 4);
+    globalCorrectKey = keycodes[rnjesus];
+    console.log(globalCorrectKey);
+    var selection = keys[rnjesus];
+    globalStartTimer = Date.now();
+    selection.style.boxShadow = "0px 0px 10px rgb(15, 239, 255)";
+
+    // Shit lights up
 }
 
 window.onload = function(){
@@ -109,8 +106,10 @@ function keyDownDetection(key){
     //fonctions a executer lorsqu'une touche est presse
     console.log(key.keycode);
     if(gameOnGoing){
-        if(key.keyCode=='65'||key.keyCode=='87'||key.keyCode=='83'||key.keyCode=='68'){// si une autre touche que awsd est presse, rien n'arrive 
-            document.getElementById("pageTitle").innerText = key.keyCode;
+        if(key.keyCode== globalCorrectKey){// si une autre touche que awsd est presse, rien n'arrive 
+            //document.getElementById("pageTitle").innerText = key.keyCode;
+            var delta = Date.now() - globalStartTimer;
+            document.getElementById("pageTitle").innerText = delta/1000 + "seconds";
         }
     }
 }

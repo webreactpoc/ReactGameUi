@@ -6,17 +6,17 @@
   padding: 30px;
 }
 .key{
-    width: 200px; height:200px;
+    width: 200px; height:200px;                       /* height and width of div block*/
     display:block;
     background-color:#fff;
-    text-align: center;
+    text-align: center;                               /* centers the text horizontally*/
     padding-left: 8px;
-    line-height: 29px;
+    line-height: 200px;                               /* centers the text vertically (a little hacky, this is based on height of block */
     border-radius:5px;
     float:left; margin-left: 5px;
     margin-bottom:5px;
     transition: box-shadow 0.7s ease;
-    font-size: 50px;
+    font-size: 50px;                                  /* size of text written on key */
   }
 
 .key:hover{box-shadow:0px 0px 10px rgb(15, 239, 255); z-index:1000;}
